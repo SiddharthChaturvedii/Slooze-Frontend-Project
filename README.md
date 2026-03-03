@@ -40,20 +40,20 @@ This repository houses the meticulously crafted signature login experience:
 
 ---
 
-## 💌 A Message for the Incredible People at Slooze
+## 💌 A Message for the Slooze Team
 
-> **To the visionary team at Slooze Company,**
+> **To the reviewers at Slooze Company,**
 > 
-> We have poured our utmost creativity, logic, and care into crafting an experience that reflects the high standards of your organization. This frontend project is more than just code; it's a testament to smooth interactions, elegant design, and an unwavering commitment to quality.
+> Thank you for the opportunity to undertake this assignment! I've really enjoyed the challenge of bringing the vision for your authentication gateway to life. 
 >
-> Your terminal authentication system now breathes with a cinematic flair that brings "Slooze.", "Commodities", "Ledger", and "Nexus" to life. 
+> I poured my focus into crafting an experience that reflects high standards of design and technical execution. The signature login sequence—featuring the smooth, non-reloading panel slide and the dramatic cinematic text zoom—was built specifically to demonstrate my skills in React, Framer Motion, and creating seamless, premium user experiences.
 > 
-> Thank you for the opportunity to build something truly spectacular together. May this application serve as a brilliant front door for all the incredible work you do behind the scenes. 
+> I hope this project serves as a strong demonstration of what I can bring to the team. I look forward to your feedback!
 > 
-> *Stay brilliant, and keep innovating.* 🚀✨
+> *Best regards,* ✨
 
 ---
 
 <div align="center">
-  <sub>Built with ❤️ and Framer Motion</sub>
+  <sub>Built as a skills demonstration</sub>
 </div>
