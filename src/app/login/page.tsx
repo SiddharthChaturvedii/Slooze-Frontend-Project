@@ -42,7 +42,7 @@ export default function LoginPage() {
     const [scope, animate] = useAnimate();
 
     const [login, { loading }] = useMutation(LOGIN_MUTATION, {
-        onCompleted: async (data) => {
+        onCompleted: async (data: any) => {
             const targetUrl = data.login.user.role === "MANAGER" ? "/dashboard" : "/products";
             authLogin(data.login.user, data.login.token, true);
 

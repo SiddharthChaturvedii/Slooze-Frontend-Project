@@ -5,7 +5,7 @@ import { gql } from "@apollo/client/core";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { LayoutDashboard, AlertOctagon, Users } from "lucide-react";
 
 const GET_DASHBOARD_STATS = gql`
@@ -36,7 +36,7 @@ const CHART_DATA = {
 };
 
 // Stagger definitions
-const containerVariants = {
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
@@ -44,7 +44,7 @@ const containerVariants = {
     }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
 };
@@ -54,7 +54,7 @@ export default function DashboardPage() {
     const router = useRouter();
     const [timeframe, setTimeframe] = useState<"This Week" | "This Month" | "This Year">("This Week");
 
-    const { data, loading, error } = useQuery(GET_DASHBOARD_STATS, {
+    const { data, loading, error } = useQuery<{ dashboardStats: any }>(GET_DASHBOARD_STATS, {
         skip: !isAuthenticated || user?.role !== "MANAGER"
     });
 
