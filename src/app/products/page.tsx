@@ -58,7 +58,7 @@ const rowVariants = {
 };
 
 export default function ProductsPage() {
-    const { data: productsData, loading, error } = useQuery(GET_PRODUCTS);
+    const { data: productsData, loading, error } = useQuery<{ products: any[] }>(GET_PRODUCTS);
     const [addProduct] = useMutation(ADD_PRODUCT, { refetchQueries: [{ query: GET_PRODUCTS }] });
     const [updateProduct] = useMutation(UPDATE_PRODUCT, { refetchQueries: [{ query: GET_PRODUCTS }] });
 
