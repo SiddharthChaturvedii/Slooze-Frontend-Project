@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
     const { user, logout, isAuthenticated } = useAuth();
     const pathname = usePathname();
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     // Prevent hydration mismatch for theme toggle
     useEffect(() => {
@@ -37,15 +38,20 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-68 z-20 flex flex-col border-r border-card-border glass bg-card/40 backdrop-blur-3xl"
+                className={`fixed inset-y-0 left-0 z-40 w-68 flex flex-col border-r border-card-border glass bg-card/90 md:bg-card/40 backdrop-blur-3xl transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}
             >
-                <div className="p-6 border-b border-card-border">
-                    <h1 className="text-2xl font-black tracking-widest mb-1 text-foreground">
-                        SLOOZE
-                    </h1>
-                    <p className="text-xs text-foreground/50 uppercase font-bold tracking-widest">
-                        Admin Console
-                    </p>
+                <div className="p-6 border-b border-card-border flex justify-between items-center">
+                    <div>
+                        <h1 className="text-2xl font-black tracking-widest mb-1 text-foreground">
+                            SLOOZE
+                        </h1>
+                        <p className="text-xs text-foreground/50 uppercase font-bold tracking-widest">
+                            Admin Console
+                        </p>
+                    </div>
+                    <button className="md:hidden text-foreground/50 hover:text-foreground" onClick={() => setIsSidebarOpen(false)}>
+                        <X className="w-6 h-6" />
+                    </button>
                 </div>
 
                 <nav className="flex-1 p-4 flex flex-col gap-2 relative">
@@ -99,11 +105,28 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                         Terminate Session
                     </motion.button>
                 </div>
-            </motion.div>
+            </motion.div >
+
+            {/* Overlay for mobile when sidebar is open */}
+            {
+                isSidebarOpen && (
+                    <div
+                        className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 md:hidden"
+                        onClick={() => setIsSidebarOpen(false)}
+                    />
+                )
+            }
 
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col overflow-auto z-10 relative">
-                <header className="h-[73px] flex items-center px-8 border-b border-card-border glass bg-card/20 backdrop-blur-md sticky top-0 z-30 transition-colors duration-300">
+                <header className="h-[73px] flex items-center px-4 md:px-8 border-b border-card-border glass bg-card/20 backdrop-blur-md sticky top-0 z-30 transition-colors duration-300">
+                    <button
+                        className="mr-4 md:hidden text-foreground/70 hover:text-foreground"
+                        onClick={() => setIsSidebarOpen(true)}
+                    >
+                        <Menu className="w-6 h-6" />
+                    </button>
+
                     <motion.h2
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -141,6 +164,6 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                     </motion.div>
                 </main>
             </div>
-        </div>
+        </div >
     );
 }

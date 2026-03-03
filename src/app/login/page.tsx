@@ -46,21 +46,30 @@ export default function LoginPage() {
             const targetUrl = data.login.user.role === "MANAGER" ? "/dashboard" : "/products";
             authLogin(data.login.user, data.login.token, true);
 
-            // Step 1 & 2: Slide left panel out, move right text to center.
-            const offset = window.innerWidth >= 1024 ? 250 : window.innerWidth >= 768 ? 240 : 0;
+            // Step 1: Detect Screen Size
+            const isMobile = window.innerWidth < 768;
 
-            const p1 = animate(".left-panel", { x: "-100%" }, { duration: 1.5, ease: "easeInOut" });
-            const p2 = animate(".typographic-art", { x: -offset }, { duration: 1.5, ease: "easeInOut" });
+            if (isMobile) {
+                // Mobile Animation: The Portal itself zooms and fades
+                const m1 = animate(".left-panel", { scale: 15, opacity: 0, filter: "blur(20px)" }, { duration: 1.8, ease: "easeInOut" });
+                await m1;
+            } else {
+                // Desktop Animation: Slide and Typographic Zoom
+                const offset = window.innerWidth >= 1024 ? 250 : 240;
 
-            await Promise.all([p1, p2]);
+                const p1 = animate(".left-panel", { x: "-100%" }, { duration: 1.5, ease: "easeInOut" });
+                const p2 = animate(".typographic-art", { x: -offset }, { duration: 1.5, ease: "easeInOut" });
 
-            // Step 3: Text slowly zooms until ~4 letters are visible
-            const p3 = animate(".typographic-art", { scale: 6 }, { duration: 2.0, ease: "easeInOut" });
+                await Promise.all([p1, p2]);
 
-            // Screen blurs out at the ending of the zoom
-            const p4 = animate(scope.current, { filter: "blur(20px)", opacity: 0 }, { duration: 0.8, delay: 1.2, ease: "easeOut" });
+                // Text slowly zooms until ~4 letters are visible
+                const p3 = animate(".typographic-art", { scale: 6 }, { duration: 2.0, ease: "easeInOut" });
 
-            await Promise.all([p3, p4]);
+                // Screen blurs out at the ending of the zoom
+                const p4 = animate(scope.current, { filter: "blur(20px)", opacity: 0 }, { duration: 0.8, delay: 1.2, ease: "easeOut" });
+
+                await Promise.all([p3, p4]);
+            }
 
             router.push(targetUrl);
         },
